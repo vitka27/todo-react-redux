@@ -1,12 +1,13 @@
-function TodoItem() {
+function AddInput() {
   return (
     <li className="list-group-item d-flex justify-content-between align-items-center">
-      List item
+      <input type="text" className="form-control" />
+
       <button className="btn" type="button">
-        <i className="bi bi-trash "></i>
+        <span className="bi bi-plus-square-dotted"></span>
       </button>
     </li>
   );
 }
 
-export default TodoItem;
+export default AddInput;
