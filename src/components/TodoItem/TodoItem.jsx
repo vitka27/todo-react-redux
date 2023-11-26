@@ -1,7 +1,7 @@
-function TodoItem() {
+function TodoItem({ item }) {
   return (
     <li className="list-group-item d-flex justify-content-between align-items-center">
-      List item
+      {item.title}
       <button className="btn" type="button">
         <i className="bi bi-trash "></i>
       </button>
