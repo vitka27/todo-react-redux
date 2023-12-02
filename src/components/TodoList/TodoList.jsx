@@ -4,19 +4,23 @@ import TodoItem from "../TodoItem/TodoItem";
 
 function TodoList() {
   const [todoList, setTodoList] = useState([]);
-  const [value, setValue] = useState("");
+  console.log(todoList);
 
-  const onSubmit = (event) => {
-    event.preventDefault();
-    console.log("submit");
-    setTodoList([...todoList, { title: value, completed: false }]);
+  const onSubmit = (value) => {
+    console.log(value.length);
+    if (value.length) {
+      setTodoList([
+        ...todoList,
+        { id: new Date().toISOString(), title: value, completed: false },
+      ]);
+    }
   };
 
-  const handleDelete = (title) => {
-    console.log(title, "Del");
-    event.preventDefault();
-    setTodoList(todoList.filter((item) => item.title !== title));
+  const handleDelete = (id) => {
+    setTodoList(todoList.filter((item) => item.id !== id));
   };
+
+  const handleCompleted = (id) => {};
 
   const getList = async () => {
     console.log("fetch list");
@@ -25,7 +29,6 @@ function TodoList() {
     setTodoList(list);
     console.log(list);
   };
-
   // useEffect(() => {
   //   getList();
   // }, []);
@@ -34,9 +37,14 @@ function TodoList() {
     <div className="wrapper container justify-content-center d-flex align-items-center flex-md-column w-50 ">
       <h3 className=" pb-4">Список дел</h3>
       <ul className="list-group h-auto w-75">
-        <AddInput setValue={setValue} onSubmit={onSubmit} />
+        <AddInput onSubmit={onSubmit} />
         {todoList.map((item, id) => (
-          <TodoItem key={id} item={item} handleDelete={handleDelete} />
+          <TodoItem
+            key={id}
+            item={item}
+            handleDelete={handleDelete}
+            handleCompleted={handleCompleted}
+          />
         ))}
       </ul>
     </div>
