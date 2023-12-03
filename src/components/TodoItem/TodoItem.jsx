@@ -1,36 +1,34 @@
 import { useState, useEffect } from "react";
 
-function TodoItem({ item, handleDelete, handleCompleted }) {
-  const [completed, setCompleted] = useState(item.completed || false);
+function TodoItem({ todo, handleDelete, handleCompleted }) {
+  const [completed, setCompleted] = useState(false);
+
+  const onCangeDelete = () => {
+    handleDelete(todo.id);
+  };
 
   const onChangeCompleted = () => {
     setCompleted(!completed);
-    handleCompleted();
+    handleCompleted(todo.id);
   };
 
   return (
     <li
       className={
-        completed
+        todo.completed
           ? "list-group-item d-flex justify-content-between align-items-center text-decoration-line-through"
           : "list-group-item d-flex justify-content-between align-items-center"
       }
     >
       <input
         onChange={onChangeCompleted}
-        checked={completed}
+        checked={todo.completed}
         className="form-check-input m-2"
-        name=""
-        id=""
         type="checkbox"
         aria-label="Text for screen reader"
       />
-      {item.title || ""}
-      <button
-        onClick={() => handleDelete(item.id)}
-        className="btn"
-        type="button"
-      >
+      {todo.title || ""}
+      <button onClick={onCangeDelete} className="btn" type="button">
         <i className="bi bi-trash "></i>
       </button>
     </li>

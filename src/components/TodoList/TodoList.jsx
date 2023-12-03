@@ -4,14 +4,13 @@ import TodoItem from "../TodoItem/TodoItem";
 
 function TodoList() {
   const [todoList, setTodoList] = useState([]);
-  console.log(todoList);
 
   const onSubmit = (value) => {
     console.log(value.length);
     if (value.length) {
       setTodoList([
-        ...todoList,
         { id: new Date().toISOString(), title: value, completed: false },
+        ...todoList,
       ]);
     }
   };
@@ -20,28 +19,34 @@ function TodoList() {
     setTodoList(todoList.filter((item) => item.id !== id));
   };
 
-  const handleCompleted = (id) => {};
+  const handleCompleted = (id) => {
+    setTodoList(
+      todoList.map((todo) =>
+        todo.id === id ? { ...todo, completed: !todo.completed } : todo
+      )
+    );
+  };
 
   const getList = async () => {
-    console.log("fetch list");
-    const response = await fetch("https://jsonplaceholder.typicode.com/todos");
+    const response = await fetch(
+      "https://jsonplaceholder.typicode.com/todos?&_limit=10"
+    );
     const list = await response.json();
     setTodoList(list);
-    console.log(list);
   };
-  // useEffect(() => {
-  //   getList();
-  // }, []);
+  useEffect(() => {
+    getList();
+  }, []);
 
   return (
     <div className="wrapper container justify-content-center d-flex align-items-center flex-md-column w-50 ">
       <h3 className=" pb-4">Список дел</h3>
       <ul className="list-group h-auto w-75">
         <AddInput onSubmit={onSubmit} />
-        {todoList.map((item, id) => (
+        {todoList.map((todo, id) => (
           <TodoItem
             key={id}
-            item={item}
+            todo={todo}
             handleDelete={handleDelete}
             handleCompleted={handleCompleted}
           />
