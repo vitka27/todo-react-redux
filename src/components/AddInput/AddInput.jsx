@@ -1,13 +1,14 @@
 import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { addTodo } from "../../store/todoSlice";
 
-function AddInput({ onSubmit }) {
-  //! имеет смысл переделать на форму
-  //!
+function AddInput() {
   const [value, setValue] = useState("");
+  const dispatch = useDispatch();
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    onSubmit(value);
+    dispatch(addTodo({ value }));
     setValue("");
   };
 

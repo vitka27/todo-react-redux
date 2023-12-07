@@ -1,15 +1,18 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { completedTodo, deleteTodo } from "../../store/todoSlice";
 
-function TodoItem({ todo, handleDelete, handleCompleted }) {
+function TodoItem({ todo }) {
+  const dispatch = useDispatch();
   const [completed, setCompleted] = useState(false);
 
-  const onCangeDelete = () => {
-    handleDelete(todo.id);
+  const onChangeDelete = () => {
+    dispatch(deleteTodo({ id: todo.id }));
   };
 
   const onChangeCompleted = () => {
     setCompleted(!completed);
-    handleCompleted(todo.id);
+    dispatch(completedTodo({ id: todo.id }));
   };
 
   return (
@@ -28,7 +31,7 @@ function TodoItem({ todo, handleDelete, handleCompleted }) {
         aria-label="Text for screen reader"
       />
       {todo.title || ""}
-      <button onClick={onCangeDelete} className="btn" type="button">
+      <button onClick={onChangeDelete} className="btn" type="button">
         <i className="bi bi-trash "></i>
       </button>
     </li>
