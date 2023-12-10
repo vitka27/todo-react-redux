@@ -21,12 +21,12 @@ const fetchTodos = createAsyncThunk(
 const addTodos = createAsyncThunk(
   "todos/addTodos",
   async (todoText, { rejectWithValue, dispatch, getState }) => {
+    const fakeTodo = {
+      id: getState().todos.todos.length + 1,
+      title: todoText.value,
+      completed: false,
+    };
     try {
-      const fakeTodo = {
-        id: getState().todos.todos.length + 1,
-        title: todoText.value,
-        completed: false,
-      };
       const response = await fetch(
         "https://jsonplaceholder.typicode.com/todos",
         {
@@ -37,13 +37,9 @@ const addTodos = createAsyncThunk(
           body: JSON.stringify(fakeTodo),
         }
       );
-
       if (!response.ok) {
-        throw new Error("ошибка при добавлении todo");
+        throw new Error("ошибка при добавлении");
       }
-
-      const result = await response.json();
-      console.log(result);
       dispatch(addTodo(fakeTodo));
     } catch (error) {
       return rejectWithValue(error.message);

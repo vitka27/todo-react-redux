@@ -20,11 +20,18 @@ function TodoList() {
       <h3 className=" pb-4">Список дел</h3>
       <ul className="list-group h-auto w-75">
         {error ? (
-          <h4>{error}</h4>
+          <div className="alert alert-danger" role="alert">
+            {error}
+          </div>
         ) : (
           <>
             {status === "loading" ? (
-              <h4>loading...</h4>
+              <div
+                className="spinner-border text-warning container justify-content-center"
+                role="status"
+              >
+                <span className="visually-hidden d-block ">Loading...</span>
+              </div>
             ) : (
               <>
                 <AddInput />
