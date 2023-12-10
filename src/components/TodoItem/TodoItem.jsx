@@ -3,16 +3,16 @@ import { useState } from "react";
 import useActions from "../../hooks/useActions";
 
 function TodoItem({ todo }) {
-  const { delTodo, todoCompleted } = useActions();
+  const { delTodo, toggleStatus } = useActions();
   const [completed, setCompleted] = useState(false);
 
   const onChangeDelete = () => {
-    delTodo(todo.id);
+    delTodo({ id: todo.id });
   };
 
   const onChangeCompleted = () => {
     setCompleted(!completed);
-    todoCompleted({ id: todo.id });
+    toggleStatus({ id: todo.id });
   };
 
   return (
