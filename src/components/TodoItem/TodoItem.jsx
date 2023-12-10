@@ -1,27 +1,24 @@
 import { useState } from "react";
-import { useDispatch } from "react-redux";
-import { completedTodo, deleteTodo } from "../../store/todoSlice";
+import useActions from "../../hooks/useActions";
 
 function TodoItem({ todo }) {
-  const dispatch = useDispatch();
+  const { delTodo, todoCompleted } = useActions();
   const [completed, setCompleted] = useState(false);
 
   const onChangeDelete = () => {
-    dispatch(deleteTodo({ id: todo.id }));
+    delTodo(todo.id);
   };
 
   const onChangeCompleted = () => {
     setCompleted(!completed);
-    dispatch(completedTodo({ id: todo.id }));
+    todoCompleted({ id: todo.id });
   };
 
   return (
     <li
-      className={
-        todo.completed
-          ? "list-group-item d-flex justify-content-between align-items-center text-decoration-line-through"
-          : "list-group-item d-flex justify-content-between align-items-center"
-      }
+      className={`list-group-item d-flex justify-content-between align-items-center ${
+        todo.completed ? "text-decoration-line-through text-danger" : ""
+      }`}
     >
       <input
         onChange={onChangeCompleted}
@@ -32,7 +29,7 @@ function TodoItem({ todo }) {
       />
       {todo.title || ""}
       <button onClick={onChangeDelete} className="btn" type="button">
-        <i className="bi bi-trash "></i>
+        <i className="bi bi-trash text-danger "></i>
       </button>
     </li>
   );

@@ -1,14 +1,14 @@
 import { useState } from "react";
-import { useDispatch } from "react-redux";
-import { addTodo } from "../../store/todoSlice";
+import useActions from "../../hooks/useActions";
 
 function AddInput() {
+  const { addTodos } = useActions();
+
   const [value, setValue] = useState("");
-  const dispatch = useDispatch();
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    dispatch(addTodo({ value }));
+    addTodos({ value });
     setValue("");
   };
 
