@@ -108,10 +108,11 @@ const todoSlise = createSlice({
     addTodo(state, action) {
       if (action.payload.value.length) {
         state.todos.push({
-          id: new Date().toISOString(),
+          id: state.todos.length,
           title: action.payload.value,
           completed: false,
         });
+        console.log(state.todos.length);
       }
     },
     deleteTodo(state, action) {

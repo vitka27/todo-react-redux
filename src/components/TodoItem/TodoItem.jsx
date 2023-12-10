@@ -1,3 +1,4 @@
+import PropTypes from "prop-types";
 import { useState } from "react";
 import useActions from "../../hooks/useActions";
 
@@ -34,5 +35,13 @@ function TodoItem({ todo }) {
     </li>
   );
 }
+
+TodoItem.propTypes = {
+  todo: PropTypes.shape({
+    id: PropTypes.number.isRequired,
+    completed: PropTypes.bool.isRequired,
+    title: PropTypes.string.isRequired,
+  }).isRequired,
+};
 
 export default TodoItem;
